@@ -1,5 +1,5 @@
-/* eslint-disable no-redeclare */
 import ApiError from '../../errors/ApiError';
+import getCookie from '../../utils/getCookie';
 
 class HttpClient {
   baseUrl: string;
@@ -9,7 +9,7 @@ class HttpClient {
   }
 
   async get(path: string) {
-    const token = JSON.parse(localStorage.getItem('token'));
+    const token = JSON.parse(getCookie('token'));
 
     const response = await fetch(`${this.baseUrl + path}`, {
       headers: {
@@ -19,7 +19,7 @@ class HttpClient {
 
     let body = null;
 
-    const contentType = response.headers.get('Content-Type');
+    const contentType = response.headers.get('Content-Type') as any;
 
     if (contentType.includes('application/json')) {
       body = await response.json();
@@ -43,7 +43,7 @@ class HttpClient {
 
     let body = null;
 
-    const contentType = response.headers.get('Content-Type');
+    const contentType = response.headers.get('Content-Type') as any;
 
     if (contentType.includes('application/json')) {
       body = await response.json();
