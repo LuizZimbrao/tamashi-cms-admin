@@ -4,20 +4,25 @@ import NavigateBar from "../NavigateBar/NavigateBar";
 
 import Routes from '../../Routes';
 
-import styles from "./App.module.css";
+import { AuthProvider } from '../../contexts/AuthContext';
+
 import getCookie from '../../utils/getCookie';
+
+import styles from "./App.module.css";
 
 function App() {
   const token = getCookie("token");
   
   return (
     <BrowserRouter>
-      <div className={styles["aplication--container"]}>
-        {token ? <NavigateBar /> : null}
-        <div className={styles["aplication--content"]}>
-          <Routes />
+      <AuthProvider>
+        <div className={styles["aplication--container"]}>
+          {token ? <NavigateBar /> : null}
+          <div className={styles["aplication--content"]}>
+            <Routes />
+          </div>
         </div>
-      </div>
+      </AuthProvider>
     </BrowserRouter>
   )
 }
